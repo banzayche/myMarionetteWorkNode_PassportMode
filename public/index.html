@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en" data-framework="marionettejs">
+	<head>
+		<meta charset="utf-8">
+		<title>Marionette • TodoMVC</title>
+		<link rel="stylesheet" href="/node_modules/todomvc-app-css/index.css">
+
+		<!-- templates -->
+
+		<!-- layout loading -->
+		<script type="text/template" id="loading-circle">
+			<div>
+				<img src="http://www.loadinfo.net/main/download?spinner=7026&disposition=inline">
+				<span>Please Wait</span>
+			</div>
+		</script>
+		<!-- /layout loading -->
+
+		<!-- layout-header -->
+		<script type="text/template" id="header-template">
+			<section class="filter-section">
+				<h3>Filtering by:</h3>
+				<a id="all" class="go-route active">All</a>
+				<a id="done" class="go-route">Alredy done</a>
+				<a id="have_done" class="go-route">Have to do</a>
+				<button id="fetch">Fetch-test</button>
+			</section>
+			<div id='input-area'>				
+			</div>
+			<a id="author_page" class="single-btn">About App</a>
+			
+			<div class="sort-section ovf-a">
+				<span class="pull-right">Sort By</span><br>
+				<button gosort='true' class="firs-sort pull-right" sortby=<%-firstSort%>><%-firstSort%></button>
+				<button gosort='true' class="second-sort pull-right" sortby=<%-secondSort%>><%-secondSort%></button>
+				<button gosort='true' class="third-sort pull-right" sortby=<%-thirdSort%>><%-thirdSort%></button>
+			</div>
+		</script>
+
+		<script type="text/layout" id="input-area-layout">
+			<label>Add New Task</label>
+			<input type="text" placeholder="Write what you have to do.." id="add-new-todo">
+		</script>
+		
+		<script type="text/layout" id="input-area-empty-layout">
+			<h3>Hi! If you want to add a new task, go to the category  "all"!</h3>
+		</script>		
+		<!-- layout-main -->
+		<!-- itemView -->
+		<script type="text/template" id="itemView-template">
+			<div class="first-section-model-ui ovf-a">
+				<input class="get-done" type=checkbox <% if(done){ %> checked <% } %> ><span><%- title %></span>
+				<button id="edit">Edit</button>
+				<button class="delete pull-right">X</button>
+			</div>
+			<input type="text" class="edit-model-title" value="<%-title%>">
+			<hr>
+		</script>
+
+		<!-- compositeView -->
+		<script type="text/template" id="compositeView-template">
+			<label><input class="check-all" type=checkbox ><span>Select All</span></label>
+			<hr>
+		</script>
+
+		<!-- no child view for compositeView -->
+		<script type="text/template" id="noChildView-template">
+			<img src="http://naudachu.com/images/uploads/adv_report/ta5Q436bhfkY6Qsiy2KiDkEi9.gif">
+			<p>This<br>collection<br>is empty!</p>
+		</script>
+
+		<!-- layout-footer -->
+		<script type="text/template" id="footer-template">
+			<h3>You have to do <strong><%-haveDo%> <% if( haveDo === 1 ){%> task <%} else{%> tasks <%}%></strong></h3>
+			<button class="remove-done pull-right">Remove <strong><%- done %> done <% if( done === 1 ){%> task <%} else{%> tasks <%}%></strong> </button>
+		</script>
+		
+
+		<!-- author's page layout -->
+		<script type="text/template" id="author-page-layout">
+			<h2>This app is built on<br>backbone.js + Marionette.js</h2>
+			<img src='http://l-lin.github.io/images/marionettejs.png' id="marionette-img">
+			<a id="all" class="single-btn"> To Home </a>
+		</script>
+		<!-- 404 layout -->
+		<script type="text/template" id="layout-404">
+			<img src="http://www.ozturkelektronik.com.tr/images/404_1.jpg" class="img-404">
+			<a id="all" class="single-btn"> To Home </a>
+		</script>
+		
+		<!-- popup -->
+		<script type="text/template" id="popup-template">
+			<span><b>If you wish you can change the attributes of model.</b></span>
+			<button id="close"><b>x</b></button>
+			<hr>			
+			<table>
+				<tr>
+					<td>Title: </td>
+					<td><input id="title" type="text" value="<%-title%>"></td>
+				</tr>
+				<tr>
+					<td>Done? </td>
+					<td><input id="done" type="checkbox" <%if(done){%>checked<%}%>></td>
+				</tr>
+			</table>
+			<hr>
+			<button id="send">Submit</button>							
+		</script>
+		<!-- /templates -->
+	</head>
+	<body>
+		<section id="root-template">
+			<div id='header'></div>
+			<div id="main"></div>
+			<div id="footer" class="ovf-a"></div>
+			<div id="popup"></div>			
+		</section>
+		<form method="POST">
+			<input tyep="text" name="username">
+			<input tyep="text" name="password">
+			<input type="submit" value="Send">
+		</form>	
+		
+		<!--<script src="node_modules/todomvc-common/base.js"></script>-->
+		<script src="/node_modules/jquery/dist/jquery.js"></script>
+		<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>		
+		<script src="/node_modules/underscore/underscore.js"></script>
+		<script src="/node_modules/backbone/backbone.js"></script>
+		<script src="/node_modules/backbone.localstorage/backbone.localStorage.js"></script>
+		<script src="/node_modules/backbone.marionette/lib/backbone.marionette.js"></script>
+		
+
+		<!-- application -->
+		<script src="/js/TodoMVC.js"></script>
+		<script src="/js/TodoMVC.Todos.js"></script>
+		<script src="/js/TodoMVC.AppStaticLayout.js"></script>
+		<script src="/js/TodoMVC.PopUp.js"></script>
+		<script src="/js/TodoMVC.TodoList.Views.js"></script>
+		<script src="/js/TodoMVC.TodoList.js"></script>
+		
+		<script>
+			$(function () {
+				// start the TodoMVC app (defined in js/TodoMVC.js)
+				MyApp.start();
+			});
+		</script>
+	</body>
+</html>
