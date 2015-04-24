@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" data-framework="marionettejs">
+	<head>
+		<meta charset="utf-8">
+		<title>LOG IN</title>
+	
+		<!-- popup -->
+		<script type="text/template" id="popup-template">
+										
+		</script>
+		<!-- /templates -->
+	</head>
+	<body>
+	<div id="log">
+		<input type="text" id="username" placeholder="Enter your login"><br>
+		<input type="text" id="password" placeholder="Enter your password"><br>
+		<button id="send">Submit</button>
+	</div>
+		
+		<!--<script src="node_modules/todomvc-common/base.js"></script>-->
+		<script src="/node_modules/jquery/dist/jquery.js"></script>
+		<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>		
+		<script src="/node_modules/underscore/underscore.js"></script>
+		<script src="/node_modules/backbone/backbone.js"></script>
+		<script src="/node_modules/backbone.localstorage/backbone.localStorage.js"></script>
+		<script src="/node_modules/backbone.marionette/lib/backbone.marionette.js"></script>
+				
+		<script>
+			$(function () {
+				$('#send').click(function(){
+					var name = $('#username').val().trim();
+					var pass = $('#password').val().trim();
+
+					var LogModel = Backbone.Model.extend({						
+						// указали все предпологаемые атрибуты модели
+						defaults: {
+							username: undefined,
+							password: undefined,
+						},
+						urlRoot: '/api/login'
+					});
+					var logModel = new LogModel();
+					logModel.save({
+						username: name,
+						password: pass,
+					});
+				});
+			});
+		</script>
+	</body>
+</html>

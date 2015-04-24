@@ -1,7 +1,12 @@
 // Подключаем модуль експресс
 var express = require('express');
+
+
+
 // Подключаем модуль боди-парсер
 var bodyParser = require('body-parser');
+
+var passport = require('./auth');
 // делаем переменную ссылкой на модуль экспресс
 var app = express();
 
@@ -67,6 +72,12 @@ todos = todos.taskList();
 var nextId = todos.length;
 // Указывается какую статическую дерикторию использовать по умолчанию
 app.use(express.static(__dirname + '/public'));
+
+// passport
+app.use(passport.initialize());
+app.use(passport.session());
+// passport
+
 app.use(bodyParser.json());
 
 // Ниже мы говорим, если наш реквест не запрашивает статические ресурсы, то он отдаст index.html
@@ -78,20 +89,47 @@ app.use(function (req, res, next) {
         return next();
     }
     // иначе - вернет следующий файл
-    res.sendFile(__dirname + '/public/index.html');
+    // res.sendFile(__dirname + '/public/index.html');
+    res.sendFile(__dirname + '/public/log.html');
 });
 
 // указывается работа с каким массивом будет проводиться, что будет отдаваться если запрашивается массив
-app.get('/api/todos', function(req, res) {
-    res.json(todos);
-});
-app.get('/api/login', function(req, res) {
-    console.log('coming to log');
-    res.sendFile(__dirname + '/public/index.html');
+// app.get('/api/todos', function(req, res) {
+//     res.json(todos);
+// });
+// app.get('/api/login', function(req, res) {
+//     console.log('coming to log');
+//     res.sendFile(__dirname + '/public/log.html');
+// });
+app.get('/home', function(req, res) {
+    res.sendFile(__dirname + '/public/home.html');
 });
 app.post('/api/login', function(req, res) {
-    console.log('posting to log');
+    console.log(req.body.username);
+    console.log(req.body.password);
+    var username = req.body.username;
+    var password = req.body.password;
+    if (username && password) {
+        if (username === '111' && password === '111'){
+            console.log(true);
+            res.redirect('/home');
+        }
+    } else{
+        console.log(false);
+        res.sendFile(__dirname + '/public/log.html');
+    }    
 });
+// app.get('/api/login', function(req, res) {
+//     res.sendFile(__dirname + '/public/index.html');
+// });
+// // проверка запостенных данных
+// app.post('/api/login', 
+//     passport.authenticate('local', {
+//     // при неудаче
+//     failureRedirect: '/api/login',
+//     // при удачной попытке
+//     successRedirect: '/all'
+// }));
 
 // что будет отдаваться если запрашивается с айди
 app.get('/api/todos/:id', function(req, res) {
