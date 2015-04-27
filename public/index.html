@@ -3,19 +3,18 @@
 	<head>
 		<meta charset="utf-8">
 		<title>LOG IN</title>
-	
-		<!-- popup -->
-		<script type="text/template" id="popup-template">
-										
-		</script>
-		<!-- /templates -->
+		<link rel="stylesheet" href="/node_modules/todomvc-app-css/login-form.css">
 	</head>
 	<body>
-	<div id="log">
-		<input type="text" id="username" placeholder="Enter your login"><br>
-		<input type="text" id="password" placeholder="Enter your password"><br>
-		<button id="send">Submit</button>
-	</div>
+		<div class="enter-container">
+			<h1>Welcome to my app!</h1>
+			<div id="log">
+				<div id="wrong"></div>
+				<input type="text" id="username" placeholder="Enter your login"><br>
+				<input type="text" id="password" placeholder="Enter your password"><br>
+				<button id="send">Submit</button>
+			</div>
+		</div>
 		
 		<!--<script src="node_modules/todomvc-common/base.js"></script>-->
 		<script src="/node_modules/jquery/dist/jquery.js"></script>
@@ -51,7 +50,7 @@
 								var alertMassage = document.createElement('h3');
 								alertMassage.style.color = 'red';
 								alertMassage.innerHTML = 'Wrong password or username!';
-								$('#log').prepend(alertMassage);
+								$('#wrong').html(alertMassage);
 							},
 						});
 				});
