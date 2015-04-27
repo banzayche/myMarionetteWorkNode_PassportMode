@@ -45,11 +45,13 @@
 						password: pass,
 					}, {
 							success: function(model, response) {
-								console.log(response);
 								window.location.href = response;
 							},
 							error: function(){
-								console.log('try againe')
+								var alertMassage = document.createElement('h3');
+								alertMassage.style.color = 'red';
+								alertMassage.innerHTML = 'Wrong password or username!';
+								$('#log').prepend(alertMassage);
 							},
 						});
 				});
