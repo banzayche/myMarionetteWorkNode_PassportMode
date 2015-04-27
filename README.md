@@ -1,2 +1,2 @@
-# myMarionetteWorkNode_PassportMode
-myMarionetteWorkNode_PassportMode
+# Marionette_MVC_Node
+Marionette_MVC_Node

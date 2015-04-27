@@ -51,7 +51,8 @@ MyApp.module('AppStaticLayout', function(AppStaticLayout, App, Backbone){
 			all: '#all',
 			done: '#done',
 			have_done: '#have_done',
-			author_page: '#author_page'
+			author_page: '#author_page',
+			exit: '#exit'
 		},
 
 		// события для ui
@@ -65,10 +66,17 @@ MyApp.module('AppStaticLayout', function(AppStaticLayout, App, Backbone){
 			'click @ui.done' : 'choiseRouter',
 			'click @ui.have_done' : 'choiseRouter',
 			'click @ui.author_page' : 'choiseRouter',
+			'click @ui.exit' : 'exit'
 		},
 		// onShow: function(){
 			
 		// },
+		// выход
+		exit: function(){
+			$.get('/api/login', function(data){
+				window.location.href = data;
+			});
+		},
 		choiseRouter: function(e){
 			Backbone.history.navigate(e.target.id, {trigger: true});
 		},
