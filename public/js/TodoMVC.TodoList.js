@@ -56,8 +56,7 @@ MyApp.module('TodoList', function(TodoList, App, Backbone){
 					Backbone.history.navigate(route, {replace: false, trigger: true});
 					this.showAll();
 				} else if(route === '/login'){
-					console.log('login')
-					return true;
+					Backbone.history.navigate('/all', {replace: false, trigger: true});
 				} else{
 					var authorPage = new App.AppStaticLayout.AuthorPage({
 						template: '#layout-404'

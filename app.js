@@ -2,8 +2,11 @@
 var express = require('express');
 // Подключаем модуль боди-парсер
 var bodyParser = require('body-parser');
+
+var session = require('express-session')
 // делаем переменную ссылкой на модуль экспресс
 var app = express();
+
 
 // массив с начальными моделями
 // var todos = [
@@ -79,7 +82,7 @@ app.use(function (req, res, next) {
         req.url.indexOf("/bower-components") === 0 ||
         req.url.indexOf("/scripts") === 0) {
         return next();
-    } else if(req.url.indexOf("/login") === 0){
+    } else if(req.url.indexOf("/login") === 0 && enterResolution === false){
         // иначе - вернет следующий файл
         res.sendFile(__dirname + '/public/index.html');  
     } else if(enterResolution === true){
