@@ -3,7 +3,8 @@ var express = require('express');
 // Подключаем модуль боди-парсер
 var bodyParser = require('body-parser');
 
-var session = require('express-session')
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
 // делаем переменную ссылкой на модуль экспресс
 var app = express();
 
